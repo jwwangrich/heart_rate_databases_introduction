@@ -1,13 +1,15 @@
 from flask import Flask, jsonify, request
+import pymodm
 from pymodm import connect
 from main import add_heart_rate, create_user, print_user
 import numpy as np
 import models
 import datetime
 import time
+from flask_cors import CORS
 
-
-connect("mongodb://localhost:27017/heart_rate")
+CORS(app)
+connect("mongodb://vcm-3539.vm.duke.edu:27017/bme590")
 app = Flask(__name__)
 
 def validate_heart_rate_request(r):
@@ -145,7 +147,7 @@ def get_int_ave():
         hr_rate = user.heart_rate
         hr_times = user.heart_rate_times
 
-        for t, p in enumerate(hr_times):
+        for t, p in enumerate(hr_times): #t means the int p means the things that want to compare with
             p1 = p.strftime('%Y-%m-%d %H:%M:%S.%f')
             p2 = time.strptime(p1, "%Y-%m-%d %H:%M:%S.%f")
             if (p2 > set_time):

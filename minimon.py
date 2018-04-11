@@ -8,9 +8,10 @@ import datetime
 import time
 from flask_cors import CORS
 
-CORS(app)
-connect("mongodb://vcm-3539.vm.duke.edu:27017/bme590")
+#connect("mongodb://vcm-3539.vm.duke.edu:27017/bme590")
+connect("mongodb://localhost:27017/heart_rate")
 app = Flask(__name__)
+CORS(app)
 
 def validate_heart_rate_request(r):
     """
@@ -62,8 +63,14 @@ def get_user(user_email):
                  measurements.
         """
     try:
-        user = models.User.objects.raw({"_id": user_email}).first()
-        return jsonify(user.heart_rate), 200
+        user_data = models.User.objects.raw({"_id": user_email}).first()
+
+        data = {
+            "usr_email": user_email,
+            "usr_heart_rate": user_data.heart_rate,
+            "times": user_data.heart_rate_times,
+        }
+        return jsonify(data), 200
     except:
         print("no user available")
         return 400

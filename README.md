@@ -27,3 +27,19 @@ This starter code _is not_ a flask server like you need to build in your assignm
 `models.User` is a data model that represents the entity we want to store and retreive from the database. You can see that `User` is just a python class with some properties. 
 
 :eyes: When writing the `POST /api/heart_rate` endpoint, you need to first check if the user with the given email already exists in the database. If so, then you can use `add_heart_rate` to append a heart rate measurement to that user. If not, then you would want to `create_user`. I did not explicitly show you how to check if a user already exists in the database, but this is something you should be able to figure out based on the sample code + google + office hours! 
+
+### Install the requirements:
+```
+pip3 install -r requirements.txt
+```
+
+#### Run the local host machine:
+```
+FLASK_APP=minimon.py flask run
+```
+
+To run the mongoDB with ```Docker```:
+```
+docker run -v $PWD/db:/data/db -p 27017:27017 mongo
+```
+
